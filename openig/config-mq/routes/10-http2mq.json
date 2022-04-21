@@ -1,0 +1,22 @@
+{
+        "name": "${(request.method == 'PUT') and matches(request.uri.path, '^/http2mq$')}",
+        "condition": "${(request.method == 'PUT') and matches(request.uri.path, '^/http2mq$')}",
+        "monitor": true,
+        "timer": true,
+        "handler": {
+                "type": "Chain",
+                "config": {
+                        "filters": [],
+                        "handler": {
+                                "type": "DispatchHandler",
+                                "config": {
+                                        "bindings": [
+                                                {
+                                                        "handler": "mq-producer"
+                                                }
+                                        ]
+                                }
+                        }
+                }
+        }
+}

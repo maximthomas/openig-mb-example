@@ -1,0 +1,22 @@
+{
+        "name": "${(request.method == 'PUT') and matches(request.uri.path, '^/http2kafka$')}",
+        "condition": "${(request.method == 'PUT') and matches(request.uri.path, '^/http2kafka$')}",
+        "monitor": true,
+        "timer": true,
+        "handler": {
+                "type": "Chain",
+                "config": {
+                        "filters": [],
+                        "handler": {
+                                "type": "DispatchHandler",
+                                "config": {
+                                        "bindings": [
+                                                {
+                                                        "handler": "kafka-producer"
+                                                }
+                                        ]
+                                }
+                        }
+                }
+        }
+}

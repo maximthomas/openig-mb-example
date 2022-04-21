@@ -1,0 +1,35 @@
+{
+  "heap": [
+    {
+      "name": "kafka-producer",
+      "type": "MQ_Kafka",
+      "config": {
+        "bootstrap.servers": "kafka:9092",
+        "topic.produce": "topic1"
+      }
+    },
+    {
+      "name": "kafka-consumer",
+      "type": "MQ_Kafka",
+      "config": {
+        "bootstrap.servers": "kafka:9092",
+        "topic.consume": "topic2",
+        "method": "POST",
+        "uri": "/kafka2http"
+      }
+    }
+  ],
+  "handler": {
+    "type": "Chain",
+    "config": {
+      "filters": [
+
+      ],
+      "handler": {
+        "type": "Router",
+        "name": "_router",
+        "capture": "all"
+      }
+    }
+  }
+}

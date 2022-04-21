@@ -1,0 +1,26 @@
+version: "3"
+services:
+  mq:
+    image: ibmcom/mq:latest
+    ports:
+      - "1414:1414"
+      - "9443:9443"
+    environment:
+      - LICENSE=accept
+      - MQ_QMGR_NAME=QM1
+
+  openig:
+    image: openidentityplatform/openig
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./openig/config-mq:/usr/local/openig-config/config"
+    environment: 
+      - CATALINA_OPTS=-Dopenig.base=/usr/local/openig-config  -Dendpoint.api=http://sample-service:8080
+
+  sample-service:
+    image: maximthomas/sample-service
+    ports:
+     - "8081:8080"

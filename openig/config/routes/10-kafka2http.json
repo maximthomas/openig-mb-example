@@ -1,0 +1,24 @@
+{
+        "name": "${(request.method == 'POST') and matches(request.uri.path, '^/kafka2http$')}",
+        "condition": "${(request.method == 'POST') and matches(request.uri.path, '^/kafka2http$')}",
+        "monitor": true,
+        "timer": true,
+        "handler": {
+                "type": "Chain",
+                "config": {
+                        "filters": [],
+                        "handler": {
+                                "type": "DispatchHandler",
+                                "config": {
+                                        "bindings": [
+                                                {
+                                                        "handler": "ClientHandler",
+                                                        "capture": "all",
+                                                        "baseURI": "${system['endpoint.api']}"
+                                                }
+                                        ]
+                                }
+                        }
+                }
+        }
+}

@@ -1,0 +1,43 @@
+{
+  "heap": [
+    {
+      "name": "mq-producer",
+      "type": "MQ_IBM",
+      "config": {
+        "XMSC_WMQ_CONNECTION_NAME_LIST":"mq(1414)",
+        "XMSC_WMQ_CHANNEL":"DEV.APP.SVRCONN",
+        "XMSC_WMQ_QUEUE_MANAGER":"QM1",
+        "XMSC_USERID":"app",
+        "XMSC_PASSWORD":"passw0rd",
+        "topic.produce": "DEV.QUEUE.1"
+      }
+    },
+    {
+      "name": "mq-consumer",
+      "type": "MQ_IBM",
+      "config": {
+        "XMSC_WMQ_CONNECTION_NAME_LIST":"mq(1414)",
+        "XMSC_WMQ_CHANNEL":"DEV.APP.SVRCONN",
+        "XMSC_WMQ_QUEUE_MANAGER":"QM1",
+        "XMSC_USERID":"app",
+        "XMSC_PASSWORD":"passw0rd",
+        "topic.consume": "DEV.QUEUE.2",
+        "uri": "/mq2http",
+        "method": "POST"
+      }
+    }
+  ],
+  "handler": {
+    "type": "Chain",
+    "config": {
+      "filters": [
+
+      ],
+      "handler": {
+        "type": "Router",
+        "name": "_router",
+        "capture": "all"
+      }
+    }
+  }
+}
