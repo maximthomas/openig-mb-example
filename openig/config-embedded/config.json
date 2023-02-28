@@ -1,0 +1,44 @@
+{
+  "heap": [
+    {
+			"name": "EmbeddedKafka",
+			"type": "EmbeddedKafka",
+			"config": {
+				"zookeper.port": "${system['zookeper.port']}",
+				"security.inter.broker.protocol": "${empty system['keystore.location'] ?'PLAINTEXT':'SSL'}",
+				"listeners": "${system['kafka.bootstrap']}",
+				"advertised.listeners": "${system['kafka.bootstrap']}",
+				"ssl.endpoint.identification.algorithm": "",
+				"ssl.enabled.protocols":"TLSv1.2",
+				"ssl.keystore.location":"${system['keystore.location']}",
+				"ssl.keystore.password":"${empty system['keystore.password']?'changeit':system['keystore.password']}",
+				"ssl.key.password":"${empty system['key.password']?'changeit':system['key.password']}",
+				"ssl.truststore.location":"${system['truststore.location']}",
+				"ssl.truststore.password":"${empty system['truststore.password']?'changeit':system['truststore.password']}"			
+			}
+		},
+    {
+      "name": "kafka-consumer",
+      "type": "MQ_Kafka",
+      "config": {
+        "bootstrap.servers": "openig:9092",
+        "topic.consume": "topic1",
+        "method": "POST",
+        "uri": "/kafka2http"
+      }
+    }    
+  ],
+  "handler": {
+    "type": "Chain",
+    "config": {
+      "filters": [
+
+      ],
+      "handler": {
+        "type": "Router",
+        "name": "_router",
+        "capture": "all"
+      }
+    }
+  }
+}
