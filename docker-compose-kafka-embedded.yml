@@ -1,0 +1,16 @@
+version: "3"
+services:
+  openig:
+    image: openidentityplatform/openig
+    ports:
+      - "8080:8080"
+      - "9092:9092"
+    volumes:
+      - "./openig/config-embedded:/usr/local/openig-config/config"
+    environment: 
+      - CATALINA_OPTS=-Dopenig.base=/usr/local/openig-config -Dendpoint.api=http://sample-service:8080 -Dzookeper.port=2181 -Dkafka.bootstrap=PLAINTEXT://openig:9092
+
+  sample-service:
+    image: maximthomas/sample-service
+    ports:
+     - "8081:8080"

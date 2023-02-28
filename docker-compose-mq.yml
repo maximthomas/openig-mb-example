@@ -11,8 +11,6 @@ services:
 
   openig:
     image: openidentityplatform/openig
-    build:
-      context: .
     ports:
       - "8080:8080"
     volumes:
